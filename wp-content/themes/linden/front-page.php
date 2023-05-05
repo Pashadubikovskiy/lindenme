@@ -153,7 +153,38 @@ get_header();
                                  </li>
                              </ul>
                          </div>
-                         .
+                         <?php
+                         $args = array(
+                             'post_type' => 'post'
+                         );
+                         $post_query = new WP_Query($args);
+
+                         if($post_query->have_posts() ) {?>
+                        <ul class="front-section-posts">
+                         <?php
+                             while($post_query->have_posts() ) {
+                                 $post_query->the_post();
+                                 ?>
+                                 <li class="front-section-posts__item front-section-posts-item">
+                                     <a href="<?php echo get_the_permalink();?>" class="front-section-posts-item__link">
+                                         <img src="<?php echo get_template_directory_uri();?>/img/post-1.png" alt="<?php the_title();?>" class="front-section-posts-item__image">
+                                         <div class="front-section-posts-item__category-views">
+                                             <span class="front-section-posts-item__category">
+                                                 On-Page SEO
+                                             </span>
+                                             <span class="front-section-posts-item__views">
+                                                 1290 views
+                                             </span>
+                                         </div>
+                                         <span class="front-section-posts-item__title">
+                                            <?php the_title();?>: A Beginner’s Guide to Using TouchDesigner with Live
+                                         </span>
+                                     </a>
+                                 </li>
+                                 <?php
+                             }?>
+                         </ul>
+                         <?php } ?>
                      </div>
                 </div>
             </div>

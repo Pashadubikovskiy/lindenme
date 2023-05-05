@@ -1023,6 +1023,9 @@ header#masthead {
 .row {
 	display: flex;
 }
+.col {
+	width: 100%;
+}
 .main-navigation li:not(:last-child) {
 	margin-right: 32px;
 }
@@ -1185,7 +1188,6 @@ button.front-main-section__btn.front-main-section__btn--watch svg {
 }
 .front-main-section-form__form {
 	padding-right: 65px;
-	/* height: auto; */
 	margin-top: auto;
 	margin-bottom: auto;
 }
@@ -1212,4 +1214,49 @@ input[type="text"] {
 	font-size: 16px;
 	line-height: 20px;
 	color: #1A1A1A;
+}
+.front-latest-section {
+	padding-top: 96px;
+}
+.front-section-title {
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 32px;
+}
+.front-section-title__subtitle {
+	font-weight: 700;
+	font-size: 48px;
+	line-height: 56px;
+	margin: 0;
+}
+.front-section-title__list.front-section-title-list {
+	display: flex;
+	align-items: center;
+	padding: 0 0 5px;
+	margin: 0 0 0 auto;
+	list-style: none;
+}
+a.front-section-title-list__link {
+	color: #7B00DB;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 24px;
+	text-decoration: none;
+}
+.front-section-title-list__item:not(:first-child) {
+	padding-left: 24px;
+}
+.front-section-posts {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	gap: 30px;
+	list-style: none;
+	width: 100%;
+}
+.front-section-posts__item.front-section-posts-item {
+	width: 370px;
+}
+.front-section-posts-item__image {
+	width: 100%;
 }
