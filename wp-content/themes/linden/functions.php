@@ -139,6 +139,7 @@ add_action( 'widgets_init', 'linden_widgets_init' );
  */
 function linden_scripts() {
 	wp_enqueue_style( 'linden-style', get_stylesheet_uri(), array(), _S_VERSION );
+	wp_enqueue_style( 'linden-style-media', get_template_directory_uri().'/css/media.css', array(), _S_VERSION );
 	wp_style_add_data( 'linden-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'linden-main', get_template_directory_uri() . '/js/main.js', array(), _S_VERSION, true );
@@ -188,3 +189,5 @@ function cc_mime_types($mimes) {
     return $mimes;
 }
 add_filter('upload_mimes', 'cc_mime_types');
+
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
