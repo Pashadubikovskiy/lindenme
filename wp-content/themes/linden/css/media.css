@@ -67,6 +67,9 @@
     .menu-toggle, .main-navigation.toggled ul {
         display: none !important;
     }
+    header {
+        position: fixed;
+    }
     header.sticky {
         padding: 16px 0 !important;
     }

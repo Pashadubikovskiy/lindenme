@@ -64,7 +64,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
             overlay.querySelector('iframe').src = document.querySelector('.front-main-section__btn--watch').dataset.src;
         }))
     }
-
     window.addEventListener('scroll', function() {
         var nav = document.querySelector('header#masthead');
 
@@ -74,4 +73,23 @@ window.addEventListener("DOMContentLoaded", (event) => {
             nav.classList.remove('sticky');
         }
     });
+    if (document.querySelectorAll('a[href="#contact"]').length > 0) {
+        document.querySelectorAll('a[href="#contact"]').forEach(link => {
+            let emailInput = document.querySelector('.wpcf7-email');
+            link.addEventListener('click', (e)=> {
+                e.preventDefault();
+                console.log(emailInput.getBoundingClientRect().y+'px')
+                window.scrollTo({
+                    top: emailInput.getBoundingClientRect().y,
+                    behavior: "smooth"
+                });
+                setTimeout(()=>emailInput.focus(), 1000)
+            })
+        })
+    }
+
+    document.addEventListener( 'wpcf7mailsent', function( event ) {
+        document.querySelector('.wpcf7-form').innerHTML += '<div class="result-success">Form sent! We will contact you shortly!</div>';
+        setTimeout(()=>document.querySelector('.result-success').remove(), 3000)
+    }, false );
 });
