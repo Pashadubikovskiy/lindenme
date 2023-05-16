@@ -1,3 +1,4 @@
+
 window.addEventListener("DOMContentLoaded", (event) => {
     if (document.querySelector('.front-main-section__title--highlited')) {
         let highlighted = document.querySelector('.front-main-section__title--highlited');
@@ -58,10 +59,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     if (document.querySelector('.front-main-section__btn--watch')) {
         const overlay = document.querySelector('.overlay');
-        const overlayTriggers = document.querySelectorAll('.front-main-section__btn--watch, .overlay__close, .overlay__bg');
-        overlayTriggers.forEach(elem => elem.addEventListener('click', ()=> {
-            overlay.classList.toggle('active');
+        const overlayOpenTriggers = document.querySelectorAll('.front-main-section__btn--watch');
+        const overlayCloseTriggers = document.querySelectorAll('.overlay__close, .overlay__bg');
+        overlayOpenTriggers.forEach(elem => elem.addEventListener('click', ()=> {
+            overlay.classList.add('active');
             overlay.querySelector('iframe').src = document.querySelector('.front-main-section__btn--watch').dataset.src;
+        }))
+        overlayCloseTriggers.forEach(elem => elem.addEventListener('click', ()=> {
+            overlay.classList.remove('active');
+            overlay.querySelector('iframe').src = '';
         }))
     }
     window.addEventListener('scroll', function() {
@@ -87,9 +93,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
         })
     }
-
-    document.addEventListener( 'wpcf7mailsent', function( event ) {
-        document.querySelector('.wpcf7-form').innerHTML += '<div class="result-success">Form sent! We will contact you shortly!</div>';
-        setTimeout(()=>document.querySelector('.result-success').remove(), 3000)
-    }, false );
+    document.addEventListener('wpcf7mailsent', function(event) {
+        document.querySelector('.wpcf7-form').innerHTML += '<div class="result-success"><img src="wp-content/themes/linden/img/success.svg">Application submitted successfully!</div>';
+        setTimeout(()=> {
+            document.querySelector('.result-success').classList.add('active');
+        }, 10)
+        setTimeout(()=> {
+            document.querySelector('.result-success').classList.remove('active');
+        }, 2600)
+        setTimeout(()=> {
+            document.querySelector('.result-success').remove();
+        }, 3000)
+    });
 });
