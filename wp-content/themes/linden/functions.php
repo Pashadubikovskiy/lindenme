@@ -138,11 +138,13 @@ add_action( 'widgets_init', 'linden_widgets_init' );
  * Enqueue scripts and styles.
  */
 function linden_scripts() {
+    wp_enqueue_style( 'linden-style-slick', get_template_directory_uri().'/css/slick.css', array(), _S_VERSION );
     wp_enqueue_style( 'linden-style', get_stylesheet_uri(), array(), _S_VERSION );
     wp_enqueue_style( 'linden-style-media', get_template_directory_uri().'/css/media.css', array(), _S_VERSION );
     wp_style_add_data( 'linden-style', 'rtl', 'replace' );
 
-    wp_enqueue_script( 'linden-main', get_template_directory_uri() . '/js/main.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'linden-slick', get_template_directory_uri() . '/js/slick.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'linden-main', get_template_directory_uri() . '/js/main.js', array('jquery'), _S_VERSION, true );
     wp_enqueue_script( 'linden-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -201,3 +203,4 @@ function custom_login_url( $login_url ) {
     $login_url = site_url( 'dashboard-login.php', 'login' );
     return $login_url;
 }
+

@@ -1568,6 +1568,7 @@ input.wpcf7-not-valid {
 }
 .one-post__photo {
 	width: 100%;
+	display: flex;
 }
 .one-post__image {
 	width: 100%;
@@ -1622,8 +1623,12 @@ input.wpcf7-not-valid {
 .site-footer .row {
 	gap: 40px;
 }
-.site-footer {
+.site-footer .container {
+	border-top: 1px solid #E0E0E0;
 	padding-top: 96px;
+}
+.site-footer {
+	position: relative;
 	padding-bottom: 9px;
 }
 .footer__item--1 {
@@ -1757,12 +1762,19 @@ input.wpcf7-not-valid {
 	opacity: 0;
 	pointer-events: none;
 	background: #F5F5F5;
+	width: 100%;
+	position: absolute;
+}
+.select:hover {
+	overflow: visible;
+}
+.select:hover li:first-child {
+	border-radius: 4px 4px 0 0;
 }
 .select:hover li {
 	opacity: 1;
 	pointer-events: all;
 	transition: .3s;
-	border-radius: unset;
 }
 .select a {
 	text-decoration: none;
@@ -1777,11 +1789,110 @@ input.wpcf7-not-valid {
 	padding: 0;
 	border-radius: 4px;
 	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+.select li:last-child {
+	border-radius: 0 0 4px 4px;
 }
 .select li:first-child {
 	opacity: 1;
 	pointer-events: all;
 	background: url('img/ph_arrow-right-light.png') no-repeat 95% 15px / 16px 16px;
 	background-color: #F5F5F5;
+	border-radius: 4px 4px 0 0;
+	position: relative;
+}
+.goTop svg {
+	width: 40px;
+}
+.goTop {
+	background: #F5F5F5;
+	border: 1px solid #E0E0E0;
 	border-radius: 4px;
+	width: 72px;
+	height: 72px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	right: 164px;
+	top: 80px;
+	transition: .3s;
+}
+.goTop:hover {
+	border-color: #1A1A1A;
+}
+
+.error-404.not-found {
+	padding: 255px 0 100px;
+}
+.error-404 .page-header {
+	max-width: 770px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.error-404 .page-title {
+	font-weight: 700;
+	font-size: 64px;
+	line-height: 70px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	color: #1A1A1A;
+	margin: 0 0 24px;
+}
+.error-404 .page-content {
+	max-width: 770px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.error-404 .search-form {
+	position: relative;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 24px;
+}
+.error-404 .search-field {
+	background: #F5F5F5;
+	border-radius: 4px;
+	border: none;
+	padding: 10px 16px;
+	width: 370px;
+	font-size: 16px;
+	line-height: 24px;
+	color: #3d3d3d;
+}
+.error-404 .search-submit {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	top: 2px;
+	right: 4px;
+	color: transparent;
+	background: url('img/ph_magnifying-glass-light.svg') no-repeat center / 24px 24px;
+	border: none;
+	cursor: pointer;
+}
+.error-404__links {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.error-404__links a {
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 20px;
+	display: flex;
+	align-items: center;
+	text-align: right;
+	color: #7B00DB;
+	text-decoration: none;
+	margin: 0 25px;
+}
+.error-404__links a svg {
+	width: 16px;
+	margin-left: 4px;
 }

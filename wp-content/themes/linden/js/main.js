@@ -93,6 +93,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
         })
     }
+    if (document.querySelector('a[href="#page"]')) {
+        document.querySelector('a[href="#page"]').addEventListener('click', (e)=> {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        })
+    }
     document.addEventListener('wpcf7mailsent', function(event) {
         document.querySelector('.wpcf7-form').innerHTML += '<div class="result-success"><img src="wp-content/themes/linden/img/success.svg">Application submitted successfully!</div>';
         setTimeout(()=> {
@@ -104,5 +113,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
         setTimeout(()=> {
             document.querySelector('.result-success').remove();
         }, 3000)
+    });
+
+    jQuery('.carousel').slick({
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        mobileFirst: true,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: 'unslick'
+            }
+        ]
     });
 });

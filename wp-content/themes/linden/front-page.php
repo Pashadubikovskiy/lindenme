@@ -166,7 +166,7 @@ get_header();
                          $post_query = new WP_Query($args);
 
                          if($post_query->have_posts() ) {?>
-                        <ul class="front-section-posts">
+                        <ul class="front-section-posts carousel">
                          <?php
                              while($post_query->have_posts() ) {
                                  $post_query->the_post();
@@ -289,7 +289,7 @@ get_header();
                             $post_query = new WP_Query($args3);
 
                             if($post_query->have_posts() ) {?>
-                                <ul class="front-section-posts">
+                                <ul class="front-section-posts carousel">
                                     <?php
                                     while($post_query->have_posts() ) {
                                         $post_query->the_post();
@@ -346,7 +346,7 @@ get_header();
                             $post_query = new WP_Query($args4);
 
                             if($post_query->have_posts() ) {?>
-                                <ul class="front-section-posts">
+                                <ul class="front-section-posts carousel">
                                     <?php
                                     while($post_query->have_posts() ) {
                                         $post_query->the_post();

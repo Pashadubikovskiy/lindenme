@@ -14,42 +14,33 @@ get_header();
 
 		<section class="error-404 not-found">
 			<header class="page-header">
-				<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'linden' ); ?></h1>
+				<h1 class="page-title"><?php esc_html_e( 'The page you’re looking for can’t be found.', 'linden' ); ?></h1>
 			</header><!-- .page-header -->
 
 			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'linden' ); ?></p>
-
-					<?php
-					get_search_form();
-
-					the_widget( 'WP_Widget_Recent_Posts' );
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'linden' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories(
-								array(
-									'orderby'    => 'count',
-									'order'      => 'DESC',
-									'show_count' => 1,
-									'title_li'   => '',
-									'number'     => 10,
-								)
-							);
-							?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-					/* translators: %1$s: smiley */
-					$linden_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'linden' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$linden_archive_content" );
-
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
+                <?php
+                get_search_form();
+                ?>
+                <div class="error-404__links">
+                    <a href="#">
+                        Return to Previous Page
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="m13.765 8.265-4.5 4.5a.375.375 0 0 1-.53-.53l3.86-3.86H2.5a.375.375 0 0 1 0-.75h10.094l-3.859-3.86a.375.375 0 0 1 .53-.53l4.5 4.5a.375.375 0 0 1 0 .53Z" fill="#7B00DB"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        Bring me Home
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="m13.765 8.265-4.5 4.5a.375.375 0 0 1-.53-.53l3.86-3.86H2.5a.375.375 0 0 1 0-.75h10.094l-3.859-3.86a.375.375 0 0 1 .53-.53l4.5 4.5a.375.375 0 0 1 0 .53Z" fill="#7B00DB"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        Contact Support
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                            <path d="m13.765 8.265-4.5 4.5a.375.375 0 0 1-.53-.53l3.86-3.86H2.5a.375.375 0 0 1 0-.75h10.094l-3.859-3.86a.375.375 0 0 1 .53-.53l4.5 4.5a.375.375 0 0 1 0 .53Z" fill="#7B00DB"/>
+                        </svg>
+                    </a>
+                </div>
 
 			</div><!-- .page-content -->
 		</section><!-- .error-404 -->
