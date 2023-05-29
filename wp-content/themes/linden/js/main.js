@@ -127,4 +127,71 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
         ]
     });
+
+    // Blog
+    jQuery('.page-hero__category-link').on('click', function(e) {
+        e.preventDefault();
+        jQuery('.page-hero__category-link').removeClass('active');
+        var btn = jQuery(this),
+        slug = jQuery(this).data('slug');
+        const postsBlock = document.querySelector('.blog-section');
+        postsBlock.classList.add('loading')
+
+        jQuery.ajax({
+            type: 'POST',
+            url: '/lindenme/wp-admin/admin-ajax.php',
+            dataType: 'html',
+            data: {
+                action: 'filter_projects',
+                category: jQuery(this).data('slug'),
+                page: 1,
+                type: 'post'
+            },
+            success: function(res) {
+                console.log(res)
+                jQuery('.blog-section .posts-block').html(res);
+                btn.addClass('active');
+                postsBlock.classList.remove('loading')
+                if (document.querySelector('#more_posts')) {document.querySelector('#more_posts').dataset.cat = slug}
+            }
+        })
+    });
+    jQuery(document).on("click", "#more_posts", function(e){
+        e.preventDefault();
+        const postsMoreButton = document.querySelector('#more_posts');
+        const postsBlock = document.querySelector('.blog-section');
+        const button = e.target,
+            category = 'post',
+            slug = postsMoreButton.dataset.cat,
+            page = postsMoreButton.dataset.page,
+            formData = new FormData();
+        postsBlock.classList.add('loading')
+        formData.append( 'action', 'load_more_posts' );
+        formData.append( 'category', category );
+        slug ? formData.append( 'slug', slug ) : formData.append( 'slug', 0 );
+        formData.append( 'page', page );
+
+        fetch( ajax_object.ajax_url, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.data)
+                // const nextPage = data.data.page;
+                button.parentNode.previousElementSibling.insertAdjacentHTML('afterend', data.data.post);
+
+                data.data.page === 0 ? postsMoreButton.remove() : postsMoreButton.dataset.page = data.data.page;
+                postsBlock.classList.remove('loading')
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.remove();
+            });
+    })
 });

@@ -107,6 +107,7 @@
         padding-bottom: 11px;
         list-style: none;
         overflow: scroll;
+        -webkit-mask-image: -webkit-gradient(linear, 93% 0, 100% 0, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
     }
     .front-section-title-list__item {
         width: fit-content;
@@ -118,7 +119,15 @@
     .slick-arrow {
         display: none !important;
     }
+    /* the slides */
+    .slick-slide {
+        margin: 0 15px;
+    }
 
+    /* the parent */
+    .slick-list {
+        margin: 0 -15px;
+    }
     .slick-dotted {
         padding-bottom: 40px;
     }

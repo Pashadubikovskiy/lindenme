@@ -146,6 +146,7 @@ function linden_scripts() {
     wp_enqueue_script( 'linden-slick', get_template_directory_uri() . '/js/slick.js', array(), _S_VERSION, true );
     wp_enqueue_script( 'linden-main', get_template_directory_uri() . '/js/main.js', array('jquery'), _S_VERSION, true );
     wp_enqueue_script( 'linden-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    wp_localize_script( 'linden-main', 'ajax_object', array('ajax_url' => admin_url( 'admin-ajax.php' )));
 
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
         wp_enqueue_script( 'comment-reply' );
@@ -198,9 +199,108 @@ add_filter( 'wpcf7_autop_or_not', '__return_false' );
  * Change WP Login file URL using "login_url" filter hook
  * https://developer.wordpress.org/reference/hooks/login_url/
  */
-add_filter( 'login_url', 'custom_login_url', PHP_INT_MAX );
-function custom_login_url( $login_url ) {
-    $login_url = site_url( 'dashboard-login.php', 'login' );
-    return $login_url;
-}
+//add_filter( 'login_url', 'custom_login_url', PHP_INT_MAX );
+//function custom_login_url( $login_url ) {
+//    $login_url = site_url( 'dashboard-login.php', 'login' );
+//    return $login_url;
+//}
 
+
+
+// post views
+function gt_get_post_view() {
+    $count = get_post_meta( get_the_ID(), 'post_views_count', true );
+    return "$count views";
+}
+function gt_set_post_view() {
+    $key = 'post_views_count';
+    $post_id = get_the_ID();
+    $count = (int) get_post_meta( $post_id, $key, true );
+    $count++;
+    update_post_meta( $post_id, $key, $count );
+}
+function gt_posts_column_views( $columns ) {
+    $columns['post_views'] = 'Views';
+    return $columns;
+}
+function gt_posts_custom_column_views( $column ) {
+    if ( $column === 'post_views') {
+        echo gt_get_post_view();
+    }
+}
+add_filter( 'manage_posts_columns', 'gt_posts_column_views' );
+add_action( 'manage_posts_custom_column', 'gt_posts_custom_column_views' );
+
+
+// filtering
+function filter_projects() {
+    $catSlug = $_POST['category'];
+    $postType = $_POST['type'];
+
+    $ajaxposts = new WP_Query([
+        'post_type' => $postType,
+        'posts_per_page' => 6,
+        'category_name' => $catSlug,
+        'orderby'=> 'date',
+    ]);
+    $response = '';
+
+    if($ajaxposts->have_posts()) {
+        while($ajaxposts->have_posts()) : $ajaxposts->the_post();
+            $response .= get_template_part('template-parts/content', $postType );
+        endwhile;
+    } else {
+        $response = 'empty';
+    }
+
+    if ($ajaxposts->max_num_pages > 1 ) {
+        $response .= '<div style="width: 100%;" class="btn btn--secondary"><a id="more_posts" data-page="1" data-category="post" data-cat="'.$catSlug.'">Load More</a></div>';
+    }
+
+    echo $response;
+    exit;
+}
+add_action('wp_ajax_filter_projects', 'filter_projects');
+add_action('wp_ajax_nopriv_filter_projects', 'filter_projects');
+
+// load more
+add_action( 'wp_ajax_load_more_posts', 'load_more_posts' );
+add_action( 'wp_ajax_nopriv_load_more_posts', 'load_more_posts' );
+function load_more_posts() {
+    // Отримати сторінку, яку ми повинні вивантажити
+    $page =  $_POST['page'] + 1;
+    // Отримати категорію постів, яку ми повинні вивантажити
+    $category = sanitize_text_field( $_POST['category'] );
+    // Створити запит до бази даних за допомогою WP_Query
+    $args = array(
+        'post_type'      => $category,
+        'category_name'  =>  $_POST['slug'],
+        'posts_per_page' => 6,
+        'paged'          => $page,
+    );
+
+    $query = new WP_Query( $args );
+    // Перевірити, чи є пости
+    if ( $query->have_posts() ) :
+        $result = '';
+        // Цикл по постах
+        while ( $query->have_posts() ) :
+            $query->the_post();
+
+            // Додати HTML-код з окремого файлу
+            ob_start();
+            get_template_part( 'template-parts/content', $category );
+            $result .= ob_get_clean();
+        endwhile;
+        // Скинути запит
+        wp_reset_postdata();
+    endif;
+    // Повернути результат у вигляді JSON-об'єкта
+    wp_send_json_success(
+        array(
+            'post' => $result,
+            // Визначити, чи є ще сторінки для вивантаження
+            'page' => $query->max_num_pages <= $page ? 0 : $page,
+        )
+    );
+}
